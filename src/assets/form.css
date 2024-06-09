@@ -1,0 +1,41 @@
+.form {
+  @apply flex flex-col gap-1;
+}
+
+.input-group {
+  @apply flex flex-col gap-0.5;
+
+  input,
+  textarea {
+    @apply bg-transparent border-2 border-accent-600 rounded-md px-3 py-1.5 focus:border-accent-400 outline-none;
+  }
+
+  p {
+    @apply text-sm text-red-500 w-full text-wrap;
+  }
+}
+
+.input-group .upload-file {
+  @apply px-3 py-1.5 rounded-md cursor-pointer transition-colors bg-accent-600 hover:bg-accent-700 w-fit;
+}
+
+.input-group > .upload-file > input {
+  @apply hidden;
+}
+
+.actions {
+  @apply flex w-full justify-end gap-2 mt-4;
+}
+
+.actions .cancel,
+.actions .ok {
+  @apply px-3 py-1.5 rounded-md transition-colors;
+}
+
+.actions .cancel {
+  @apply border-2 border-accent-600 hover:border-accent-700;
+}
+
+.actions .ok {
+  @apply bg-accent-600 hover:bg-accent-700;
+}
