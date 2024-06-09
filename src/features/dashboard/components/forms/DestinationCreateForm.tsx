@@ -46,8 +46,8 @@ const DestinationCreateForm = ({ close, mutate }: Props) => {
   };
 
   return (
-    <Dialog>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <Dialog className="outline-none">
+      <form className="form" onSubmit={handleSubmit(onSubmit)}>
         <div className="input-group">
           <label htmlFor="nameInput">Nama</label>
           <input type="text" id="nameInput" {...register("name")} />
@@ -77,20 +77,25 @@ const DestinationCreateForm = ({ close, mutate }: Props) => {
 
         <div className="input-group">
           <label htmlFor="imageInput">Gambar</label>
-          <input
-            type="file"
-            accept=".jpg,.jpeg,.png,.webp,.jfif"
-            id="imageInput"
-            {...register("image")}
-          />
+          <label className="upload-file">
+            Upload File
+            <input
+              type="file"
+              accept=".jpg,.jpeg,.png,.webp,.jfif"
+              id="imageInput"
+              {...register("image")}
+            />
+          </label>
           <p>{errors.image?.message as string}</p>
         </div>
 
-        <div className="flex">
-          <Button type="reset" onPress={close}>
+        <div className="actions">
+          <Button type="reset" className="cancel" onPress={close}>
             Batal
           </Button>
-          <Button type="submit">Selesai</Button>
+          <Button type="submit" className="ok">
+            Selesai
+          </Button>
         </div>
       </form>
     </Dialog>
