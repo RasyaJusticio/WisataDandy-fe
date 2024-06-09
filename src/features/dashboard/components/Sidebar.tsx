@@ -10,7 +10,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="fixed top-0 left-0 p-5 w-full md:w-48 md:h-full z-50 bg-secondary flex items-start md:items-center md:flex-col gap-10 border-r-2 border-border">
+      <div className="fixed top-0 left-0 p-5 w-full md:w-48 md:h-full z-50 bg-secondary flex items-start md:items-center md:flex-col gap-5 border-r-2 border-border">
         <Logo />
         <button
           className="block md:hidden text-2xl ml-auto"

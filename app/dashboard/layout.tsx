@@ -12,7 +12,9 @@ const DashboardLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     <>
       <DashboardSidebar />
       <main className="w-full">
-        <div className="pl-48 lg:container lg:mx-auto">{children}</div>
+        <div className="pt-16 md:pt-0 md:pl-48 lg:container lg:mx-auto">
+          {children}
+        </div>
       </main>
     </>
   );
