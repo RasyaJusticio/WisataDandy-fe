@@ -4,6 +4,7 @@ import {
   DashboardModal,
   DashboardTable,
   destinationColumns,
+  DestinationCreateForm,
   destinationService,
   TableRow,
 } from "@/src/features/dashboard";
@@ -47,7 +48,7 @@ const DestinationPage = () => {
       </div>
 
       <DashboardModal isOpen={isCreateModalOpen} setOpen={setCreateModalOpen}>
-        {({ close }) => <span>Create Modal</span>}
+        {({ close }) => <DestinationCreateForm />}
       </DashboardModal>
 
       <DashboardModal isOpen={isReadModalOpen} setOpen={setReadModalOpen}>
