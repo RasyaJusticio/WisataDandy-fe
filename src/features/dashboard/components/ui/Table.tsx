@@ -31,7 +31,7 @@ type Props = Readonly<{
   onCreate?: (e: PressEvent) => void;
   onRead?: (e: PressEvent) => void;
   onUpdate?: (e: PressEvent) => void;
-  onDelete?: (e: PressEvent) => void;
+  onDelete?: (data: number) => void;
 }>;
 
 const MyTable = ({
@@ -47,7 +47,10 @@ const MyTable = ({
   return (
     <>
       <div className="flex items-center mb-3 gap-3">
-        <Button onPress={onCreate} className="bg-accent-600 px-3 py-1.5 rounded-md transition-colors hover:bg-accent-700">
+        <Button
+          onPress={onCreate}
+          className="bg-accent-600 px-3 py-1.5 rounded-md transition-colors hover:bg-accent-700"
+        >
           + {dataName} Baru
         </Button>
         {loading && <PiCircleNotch className="text-2xl animate-spin" />}
@@ -98,7 +101,7 @@ const MyTable = ({
                         <PiPencil />
                       </Button>
                       <Button
-                        onPress={onDelete}
+                        onPress={() => onDelete && onDelete(row?.id || 0)}
                         className="hover:bg-accent-600 rounded-md transition-all p-2"
                       >
                         <PiTrash />

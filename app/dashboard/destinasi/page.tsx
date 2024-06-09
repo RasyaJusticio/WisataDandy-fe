@@ -4,17 +4,20 @@ import {
   DashboardModal,
   DashboardTable,
   destinationColumns,
+  DestinationDeleteForm,
   destinationService,
   TableRow,
 } from "@/src/features/dashboard";
 import React, { useState } from "react";
 
 const DestinationPage = () => {
-  const { data, isLoading } = destinationService.useDestination();
+  const { data, isLoading, mutate } = destinationService.useDestination();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
   const [isReadModalOpen, setReadModalOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+  const [deleteDataSource, setDeleteDataSource] = useState<number>(0);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const onCreate = () => {
     setCreateModalOpen(true);
@@ -28,7 +31,10 @@ const DestinationPage = () => {
     setUpdateModalOpen(true);
   };
 
-  const onDelete = () => {};
+  const onDelete = (data: number) => {
+    setDeleteDataSource(data)
+    setDeleteModalOpen(true);
+  };
 
   return (
     <>
@@ -56,6 +62,10 @@ const DestinationPage = () => {
 
       <DashboardModal isOpen={isUpdateModalOpen} setOpen={setUpdateModalOpen}>
         {({ close }) => <span>Update Modal</span>}
+      </DashboardModal>
+
+      <DashboardModal isOpen={isDeleteModalOpen} setOpen={setDeleteModalOpen}>
+        {({ close }) => <DestinationDeleteForm mutate={mutate} dataSource={deleteDataSource} close={close} />}
       </DashboardModal>
     </>
   );
