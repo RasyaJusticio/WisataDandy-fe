@@ -37,7 +37,7 @@ const MyTable = ({ columns, rows, dataName }: Props) => {
         </Button>
       </div>
       <div className="overflow-auto rounded-md">
-        <Table className="border-collapse">
+        <Table className="border-collapse w-full">
           <TableHeader>
             {columns.map((column, colId) => (
               <Column
@@ -50,7 +50,7 @@ const MyTable = ({ columns, rows, dataName }: Props) => {
             ))}
             <Column
               isRowHeader
-              className="text-start bg-primary rounded-tr-md p-3"
+              className="text-start w-[10%] bg-primary rounded-tr-md p-3"
             ></Column>
           </TableHeader>
           <TableBody>
@@ -62,9 +62,11 @@ const MyTable = ({ columns, rows, dataName }: Props) => {
                 {columns.map((column, colId) => (
                   <Cell
                     key={colId}
-                    className="p-3 max-w-[23.2rem] text-nowrap overflow-hidden text-ellipsis bg-secondary"
+                    className="p-3 bg-secondary"
                   >
-                    <span>{row[column.dataKey]}</span>
+                    <span className="text-nowrap overflow-hidden text-ellipsis">
+                      {row[column.dataKey]}
+                    </span>
                   </Cell>
                 ))}
                 <Cell className="p-3 bg-secondary rounded-br-md">
