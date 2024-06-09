@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import { Dialog, Modal } from "react-aria-components";
 
 type Props = Readonly<{
@@ -10,8 +10,13 @@ type Props = Readonly<{
 
 const MyModal = ({ isOpen, setOpen }: Props) => {
   return (
-    <Modal isDismissable isOpen={isOpen} onOpenChange={setOpen}>
-      <Dialog></Dialog>
+    <Modal
+      isDismissable
+      className="fixed top-0 left-0 w-screen h-screen bg-[rgba(0,0,0,0.5)] grid place-items-center z-[100]"
+      isOpen={isOpen}
+      onOpenChange={setOpen}
+    >
+      <Dialog>asdfasdfa</Dialog>
     </Modal>
   );
 };

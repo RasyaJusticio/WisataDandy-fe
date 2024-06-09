@@ -5,6 +5,7 @@ import {
   Button,
   Cell,
   Column,
+  PressEvent,
   Row,
   Table,
   TableBody,
@@ -27,13 +28,26 @@ type Props = Readonly<{
   rows?: Row[];
   dataName: string;
   loading?: boolean;
+  onCreate?: (e: PressEvent) => void;
+  onRead?: (e: PressEvent) => void;
+  onUpdate?: (e: PressEvent) => void;
+  onDelete?: (e: PressEvent) => void;
 }>;
 
-const MyTable = ({ columns, rows, dataName, loading = false }: Props) => {
+const MyTable = ({
+  columns,
+  rows,
+  dataName,
+  loading = false,
+  onRead,
+  onCreate,
+  onUpdate,
+  onDelete,
+}: Props) => {
   return (
     <>
       <div className="flex items-center mb-3 gap-3">
-        <Button className="bg-accent-600 px-3 py-1.5 rounded-md transition-colors hover:bg-accent-700">
+        <Button onPress={onCreate} className="bg-accent-600 px-3 py-1.5 rounded-md transition-colors hover:bg-accent-700">
           + {dataName} Baru
         </Button>
         {loading && <PiCircleNotch className="text-2xl animate-spin" />}
@@ -71,13 +85,22 @@ const MyTable = ({ columns, rows, dataName, loading = false }: Props) => {
                   ))}
                   <Cell className="p-3 bg-secondary rounded-br-md">
                     <div className="flex gap-1">
-                      <Button className="hover:bg-accent-600 rounded-md transition-all p-2">
+                      <Button
+                        onPress={onRead}
+                        className="hover:bg-accent-600 rounded-md transition-all p-2"
+                      >
                         <PiEye />
                       </Button>
-                      <Button className="hover:bg-accent-600 rounded-md transition-all p-2">
+                      <Button
+                        onPress={onUpdate}
+                        className="hover:bg-accent-600 rounded-md transition-all p-2"
+                      >
                         <PiPencil />
                       </Button>
-                      <Button className="hover:bg-accent-600 rounded-md transition-all p-2">
+                      <Button
+                        onPress={onDelete}
+                        className="hover:bg-accent-600 rounded-md transition-all p-2"
+                      >
                         <PiTrash />
                       </Button>
                     </div>
