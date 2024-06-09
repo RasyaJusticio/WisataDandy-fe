@@ -13,7 +13,9 @@ const resSchema = z.array(schema);
 
 const service = {
   useFacility: () => {
-    const { data, error, isLoading, mutate } = useSWR(`${url}`, fetcher);
+    const { data, error, isLoading, mutate } = useSWR(`${url}`, fetcher, {
+      revalidateOnMount: true,
+    });
 
     if (!data || !data.data) {
       return {
