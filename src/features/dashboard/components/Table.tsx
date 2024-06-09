@@ -10,7 +10,7 @@ import {
   TableBody,
   TableHeader,
 } from "react-aria-components";
-import { PiEye, PiPencil, PiTrash } from "react-icons/pi";
+import { PiCircleNotch, PiEye, PiPencil, PiTrash } from "react-icons/pi";
 
 export interface Column {
   label: string;
@@ -24,17 +24,19 @@ export type Row = {
 
 type Props = Readonly<{
   columns: Column[];
-  rows: Row[];
+  rows?: Row[];
   dataName: string;
+  loading?: boolean;
 }>;
 
-const MyTable = ({ columns, rows, dataName }: Props) => {
+const MyTable = ({ columns, rows, dataName, loading = false }: Props) => {
   return (
     <>
-      <div className="flex mb-3">
+      <div className="flex items-center mb-3 gap-3">
         <Button className="bg-accent-600 px-3 py-1.5 rounded-md transition-colors hover:bg-accent-700">
           + {dataName} Baru
         </Button>
+        {loading && <PiCircleNotch className="text-2xl animate-spin" />}
       </div>
       <div className="overflow-auto rounded-md">
         <Table className="border-collapse w-full">
@@ -54,36 +56,47 @@ const MyTable = ({ columns, rows, dataName }: Props) => {
             ></Column>
           </TableHeader>
           <TableBody>
-            {rows.map((row, rowId) => (
-              <Row
-                key={rowId}
-                className="border-b-2 border-border last:border-b-0"
-              >
-                {columns.map((column, colId) => (
-                  <Cell
-                    key={colId}
-                    className="p-3 bg-secondary"
-                  >
-                    <span className="text-nowrap overflow-hidden text-ellipsis">
-                      {row[column.dataKey]}
-                    </span>
+            {rows && rows.length > 0 ? (
+              rows.map((row, rowId) => (
+                <Row
+                  key={rowId}
+                  className="border-b-2 border-border last:border-b-0"
+                >
+                  {columns.map((column, colId) => (
+                    <Cell key={colId} className="p-3 bg-secondary">
+                      <span className="text-nowrap overflow-hidden text-ellipsis">
+                        {row[column.dataKey]}
+                      </span>
+                    </Cell>
+                  ))}
+                  <Cell className="p-3 bg-secondary rounded-br-md">
+                    <div className="flex gap-1">
+                      <Button className="hover:bg-accent-600 rounded-md transition-all p-2">
+                        <PiEye />
+                      </Button>
+                      <Button className="hover:bg-accent-600 rounded-md transition-all p-2">
+                        <PiPencil />
+                      </Button>
+                      <Button className="hover:bg-accent-600 rounded-md transition-all p-2">
+                        <PiTrash />
+                      </Button>
+                    </div>
                   </Cell>
-                ))}
-                <Cell className="p-3 bg-secondary rounded-br-md">
-                  <div className="flex gap-1">
-                    <Button className="hover:bg-accent-600 rounded-md transition-all p-2">
-                      <PiEye />
-                    </Button>
-                    <Button className="hover:bg-accent-600 rounded-md transition-all p-2">
-                      <PiPencil />
-                    </Button>
-                    <Button className="hover:bg-accent-600 rounded-md transition-all p-2">
-                      <PiTrash />
-                    </Button>
-                  </div>
-                </Cell>
+                </Row>
+              ))
+            ) : (
+              <Row className="border-b-2 border-border last:border-b-0">
+                {columns.map(
+                  (_, index) =>
+                    index <= columns.length - 1 && (
+                      <Cell key={index} className="relative p-3 bg-secondary">
+                        -
+                      </Cell>
+                    )
+                )}
+                <Cell className="relative p-3 bg-secondary"></Cell>
               </Row>
-            ))}
+            )}
           </TableBody>
         </Table>
       </div>
