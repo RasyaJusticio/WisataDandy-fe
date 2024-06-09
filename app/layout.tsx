@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "@/src/assets/globals.css";
+import "@/src/assets/form.css";
 
 export const metadata: Metadata = {
   title: "WisataDandy",
