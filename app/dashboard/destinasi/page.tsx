@@ -11,7 +11,7 @@ import {
 import React, { useState } from "react";
 
 const DestinationPage = () => {
-  const { data, isLoading } = destinationService.useDestination();
+  const { data, isLoading, mutate } = destinationService.useDestination();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
   const [isReadModalOpen, setReadModalOpen] = useState(false);
@@ -48,7 +48,7 @@ const DestinationPage = () => {
       </div>
 
       <DashboardModal isOpen={isCreateModalOpen} setOpen={setCreateModalOpen}>
-        {({ close }) => <DestinationCreateForm />}
+        {({ close }) => <DestinationCreateForm mutate={mutate} close={close} />}
       </DashboardModal>
 
       <DashboardModal isOpen={isReadModalOpen} setOpen={setReadModalOpen}>

@@ -8,8 +8,16 @@ import {
   DestinationCreateFormData,
   DestinationCreateSchema,
 } from "../../types/DestinationCreateFormData";
+import { KeyedMutator } from "swr";
 
-const DestinationCreateForm = () => {
+const URL = "http://127.0.0.1:8000/api/v1/destination";
+
+type Props = Readonly<{
+  close: () => void;
+  mutate: KeyedMutator<any>;
+}>;
+
+const DestinationCreateForm = ({ close, mutate }: Props) => {
   const {
     handleSubmit,
     register,
@@ -19,7 +27,22 @@ const DestinationCreateForm = () => {
   });
 
   const onSubmit = (data: DestinationCreateFormData) => {
-    console.log(data);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("slug", data.slug);
+    formData.append("address", data.address);
+    formData.append("description", data.description);
+    formData.append("image", data.image[0]);
+
+    fetch(URL, {
+      method: "POST",
+      body: formData,
+      headers: {
+        accept: "application/json",
+      },
+    }).then(() => {
+      mutate();
+    });
   };
 
   return (
@@ -64,7 +87,9 @@ const DestinationCreateForm = () => {
         </div>
 
         <div className="flex">
-          <Button type="reset">Batal</Button>
+          <Button type="reset" onPress={close}>
+            Batal
+          </Button>
           <Button type="submit">Selesai</Button>
         </div>
       </form>
