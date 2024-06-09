@@ -3,9 +3,10 @@
 import React from "react";
 import { Button, Dialog } from "react-aria-components";
 import { Row } from "../ui/Table";
+import { DestinationFormData } from "../..";
 
 type Props = Readonly<{
-  dataSource: Row | null | undefined;
+  dataSource: DestinationFormData | null | undefined;
   close: () => void;
 }>;
 
@@ -45,7 +46,7 @@ const DestinationReadForm = ({ dataSource, close }: Props) => {
         <div className="input-group">
           <label htmlFor="imageInput">Gambar</label>
           <a
-            href={`http://127.0.0.1:8000/storage/${dataSource?.image_url}`}
+            href={`http://127.0.0.1:8000/storage/${dataSource?.image_url || ''}`}
             type="button"
           >
             Lihat Gambar
@@ -53,11 +54,11 @@ const DestinationReadForm = ({ dataSource, close }: Props) => {
         </div>
 
         <div className="actions">
+          <a href={`/destinasi/${dataSource?.slug}`} className="cancel">
+            Lihat Halaman
+          </a>
           <Button type="reset" className="cancel" onPress={close}>
-            Batal
-          </Button>
-          <Button type="submit" className="ok">
-            Selesai
+            Kembali
           </Button>
         </div>
       </form>
