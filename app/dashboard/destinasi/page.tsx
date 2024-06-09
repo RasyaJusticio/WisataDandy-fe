@@ -12,54 +12,6 @@ const rows: TableRow[] = [
     description: "Tempat wisata yang bagus bernama Labuan Bajo",
     address: "Di sini senang di sana senang di mana-mana hatiku senang.",
   },
-  {
-    id: 1,
-    name: "Labuan Bajo",
-    description: "Tempat wisata yang bagus bernama Labuan Bajo",
-    address: "Di sini senang di sana senang di mana-mana hatiku senang.",
-  },
-  {
-    id: 1,
-    name: "Labuan Bajo",
-    description: "Tempat wisata yang bagus bernama Labuan Bajo",
-    address: "Di sini senang di sana senang di mana-mana hatiku senang.",
-  },
-  {
-    id: 1,
-    name: "Labuan Bajo",
-    description: "Tempat wisata yang bagus bernama Labuan Bajo",
-    address: "Di sini senang di sana senang di mana-mana hatiku senang.",
-  },
-  {
-    id: 1,
-    name: "Labuan Bajo",
-    description: "Tempat wisata yang bagus bernama Labuan Bajo",
-    address: "Di sini senang di sana senang di mana-mana hatiku senang.",
-  },
-  {
-    id: 1,
-    name: "Labuan Bajo",
-    description: "Tempat wisata yang bagus bernama Labuan Bajo",
-    address: "Di sini senang di sana senang di mana-mana hatiku senang.",
-  },
-  {
-    id: 1,
-    name: "Labuan Bajo",
-    description: "Tempat wisata yang bagus bernama Labuan Bajo",
-    address: "Di sini senang di sana senang di mana-mana hatiku senang.",
-  },
-  {
-    id: 1,
-    name: "Labuan Bajo",
-    description: "Tempat wisata yang bagus bernama Labuan Bajo",
-    address: "Di sini senang di sana senang di mana-mana hatiku senang.",
-  },
-  {
-    id: 1,
-    name: "Labuan Bajo",
-    description: "Tempat wisata yang bagus bernama Labuan Bajo",
-    address: "Di sini senang di sana senang di mana-mana hatiku senang.",
-  },
 ];
 
 const DestinationPage = () => {
