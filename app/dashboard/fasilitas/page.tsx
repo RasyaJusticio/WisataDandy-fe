@@ -7,10 +7,11 @@ import {
   facilityService,
   TableRow,
 } from "@/src/features/dashboard";
+import FacilityCreateForm from "@/src/features/dashboard/components/forms/FacilityCreateForm";
 import React, { useState } from "react";
 
 const FacilityPage = () => {
-  const { data, isLoading } = facilityService.useFacility();
+  const { data, isLoading, mutate } = facilityService.useFacility();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
@@ -41,7 +42,7 @@ const FacilityPage = () => {
       </div>
 
       <DashboardModal isOpen={isCreateModalOpen} setOpen={setCreateModalOpen}>
-        {({ close }) => <span>Create Modal</span>}
+        {({ close }) => <FacilityCreateForm close={close} mutate={mutate} />}
       </DashboardModal>
 
       <DashboardModal isOpen={isUpdateModalOpen} setOpen={setUpdateModalOpen}>

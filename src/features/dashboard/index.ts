@@ -11,8 +11,11 @@ export { default as DestinationDeleteForm } from "./components/forms/Destination
 
 export { destinationSchema } from "./types/DestinationSchema";
 export type { DestinationSchema } from "./types/DestinationSchema";
+export { facilitySchema } from "./types/FacilitySchema";
+export type { FacilitySchema } from "./types/FacilitySchema";
 
 export type { default as DestinationObject } from "./types/DestinationObject";
+export type { default as FacilityObject } from "./types/FacilityObject";
 
 export { default as destinationService } from "./services/destinationService";
 export { default as facilityService } from "./services/facilityService";
