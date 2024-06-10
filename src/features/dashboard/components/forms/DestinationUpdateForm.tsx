@@ -52,7 +52,7 @@ const DestinationUpdateForm = ({ dataSource, close, mutate }: Props) => {
     if (data.description !== dataSource?.description) {
       formData.append("description", data.description);
     }
-    if (data.image) {
+    if (data.image.length > 0) {
       formData.append("image", data.image[0]);
     }
 

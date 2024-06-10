@@ -47,7 +47,7 @@ const DestinationReadForm = ({ dataSource, close }: Props) => {
           <label htmlFor="descriptionInput">Deskripsi</label>
           <textarea
             id="descriptionInput"
-            value={dataSource?.description}
+            value={dataSource?.description || ""}
             readOnly
           ></textarea>
         </div>

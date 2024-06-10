@@ -8,7 +8,6 @@ import {
   DestinationCreateForm,
   DestinationReadForm,
   DestinationUpdateForm,
-  DestinationObject, 
   destinationService,
   TableRow,
 } from "@/src/features/dashboard";
