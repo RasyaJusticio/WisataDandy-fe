@@ -9,14 +9,13 @@ import {
   Modal,
   ModalOverlay,
 } from "react-aria-components";
-import { Row } from "../ui/Table";
-import { DestinationFormData } from "../..";
+import { DestinationObject } from "../..";
 import Image from "next/image";
 import Link from "next/link";
 import { PiX } from "react-icons/pi";
 
 type Props = Readonly<{
-  dataSource: DestinationFormData | null | undefined;
+  dataSource: DestinationObject | null | undefined;
   close: () => void;
 }>;
 

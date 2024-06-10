@@ -1,4 +1,4 @@
-export default interface DestinationReadFormData {
+export default interface DestinationObject {
   id: number;
   name: string;
   slug: string;
