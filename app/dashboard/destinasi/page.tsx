@@ -40,7 +40,7 @@ const DestinationPage = () => {
   };
 
   const onDelete = (data: number) => {
-    setDeleteDataSource(data)
+    setDeleteDataSource(data);
     setDeleteModalOpen(true);
   };
 
@@ -84,7 +84,13 @@ const DestinationPage = () => {
       </DashboardModal>
 
       <DashboardModal isOpen={isDeleteModalOpen} setOpen={setDeleteModalOpen}>
-        {({ close }) => <DestinationDeleteForm mutate={mutate} dataSource={deleteDataSource} close={close} />}
+        {({ close }) => (
+          <DestinationDeleteForm
+            mutate={mutate}
+            dataSource={deleteDataSource}
+            close={close}
+          />
+        )}
       </DashboardModal>
     </>
   );

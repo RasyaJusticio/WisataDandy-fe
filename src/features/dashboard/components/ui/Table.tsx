@@ -55,7 +55,7 @@ const MyTable = ({
         </Button>
         {loading && <PiCircleNotch className="text-2xl animate-spin" />}
       </div>
-      <div className="overflow-auto rounded-md">
+      <div className="overflow-auto rounded-md pb-[1px]">
         <Table className="border-collapse w-full">
           <TableHeader>
             {columns.map((column, colId) => (

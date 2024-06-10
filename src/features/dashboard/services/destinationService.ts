@@ -8,8 +8,8 @@ const schema = z.object({
   id: z.number(),
   name: z.string(),
   slug: z.string(),
-  description: z.string(),
   address: z.string(),
+  description: z.string().nullable(),
   image_url: z.string().nullable(),
 });
 
@@ -31,6 +31,7 @@ const service = {
       };
     }
 
+    console.log(data);
     const parseResult = resSchema.safeParse(data.data);
 
     return {
