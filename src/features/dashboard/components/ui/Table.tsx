@@ -29,8 +29,8 @@ type Props = Readonly<{
   dataName: string;
   loading?: boolean;
   onCreate?: (e: PressEvent) => void;
-  onRead?: (e: PressEvent) => void;
-  onUpdate?: (e: PressEvent) => void;
+  onRead?: (data: Row) => void;
+  onUpdate?: (data: Row) => void;
   onDelete?: (data: number) => void;
 }>;
 
@@ -89,13 +89,13 @@ const MyTable = ({
                   <Cell className="p-3 bg-secondary rounded-br-md">
                     <div className="flex gap-1">
                       <Button
-                        onPress={onRead}
+                        onPress={() => onRead && onRead(row)}
                         className="hover:bg-accent-600 rounded-md transition-all p-2"
                       >
                         <PiEye />
                       </Button>
                       <Button
-                        onPress={onUpdate}
+                        onPress={() => onUpdate && onUpdate(row)}
                         className="hover:bg-accent-600 rounded-md transition-all p-2"
                       >
                         <PiPencil />
