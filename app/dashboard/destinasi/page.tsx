@@ -5,6 +5,8 @@ import {
   DashboardTable,
   destinationColumns,
   DestinationCreateForm,
+  DestinationReadForm,
+  DestinationObject, 
   destinationService,
   TableRow,
 } from "@/src/features/dashboard";
@@ -14,6 +16,7 @@ const DestinationPage = () => {
   const { data, isLoading, mutate } = destinationService.useDestination();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+  const [readDataSource, setReadDataSource] = useState<DestinationObject>();
   const [isReadModalOpen, setReadModalOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
 
@@ -21,7 +24,8 @@ const DestinationPage = () => {
     setCreateModalOpen(true);
   };
 
-  const onRead = () => {
+  const onRead = (data: TableRow) => {
+    setReadDataSource(data as DestinationObject);
     setReadModalOpen(true);
   };
 
@@ -52,7 +56,12 @@ const DestinationPage = () => {
       </DashboardModal>
 
       <DashboardModal isOpen={isReadModalOpen} setOpen={setReadModalOpen}>
-        {({ close }) => <span>Read Modal</span>}
+        {({ close }) => (
+          <DestinationReadForm
+            dataSource={readDataSource != null ? readDataSource : null}
+            close={close}
+          />
+        )}
       </DashboardModal>
 
       <DashboardModal isOpen={isUpdateModalOpen} setOpen={setUpdateModalOpen}>
