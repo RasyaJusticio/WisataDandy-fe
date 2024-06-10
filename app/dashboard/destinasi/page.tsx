@@ -4,31 +4,45 @@ import {
   DashboardModal,
   DashboardTable,
   destinationColumns,
+  DestinationObject,
+  DestinationCreateForm,
+  DestinationReadForm,
+  DestinationUpdateForm,
+  DestinationDeleteForm,
   destinationService,
   TableRow,
 } from "@/src/features/dashboard";
 import React, { useState } from "react";
 
 const DestinationPage = () => {
-  const { data, isLoading } = destinationService.useDestination();
+  const { data, isLoading, mutate } = destinationService.useDestination();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+  const [readDataSource, setReadDataSource] = useState<DestinationObject>();
   const [isReadModalOpen, setReadModalOpen] = useState(false);
+  const [updateDataSource, setUpdateDataSource] = useState<DestinationObject>();
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+  const [deleteDataSource, setDeleteDataSource] = useState<number>(0);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const onCreate = () => {
     setCreateModalOpen(true);
   };
 
-  const onRead = () => {
+  const onRead = (data: TableRow) => {
+    setReadDataSource(data as DestinationObject);
     setReadModalOpen(true);
   };
 
-  const onUpdate = () => {
+  const onUpdate = (data: TableRow) => {
+    setUpdateDataSource(data as DestinationObject);
     setUpdateModalOpen(true);
   };
 
-  const onDelete = () => {};
+  const onDelete = (data: number) => {
+    setDeleteDataSource(data);
+    setDeleteModalOpen(true);
+  };
 
   return (
     <>
@@ -47,15 +61,36 @@ const DestinationPage = () => {
       </div>
 
       <DashboardModal isOpen={isCreateModalOpen} setOpen={setCreateModalOpen}>
-        {({ close }) => <span>Create Modal</span>}
+        {({ close }) => <DestinationCreateForm mutate={mutate} close={close} />}
       </DashboardModal>
 
       <DashboardModal isOpen={isReadModalOpen} setOpen={setReadModalOpen}>
-        {({ close }) => <span>Read Modal</span>}
+        {({ close }) => (
+          <DestinationReadForm
+            dataSource={readDataSource != null ? readDataSource : null}
+            close={close}
+          />
+        )}
       </DashboardModal>
 
       <DashboardModal isOpen={isUpdateModalOpen} setOpen={setUpdateModalOpen}>
-        {({ close }) => <span>Update Modal</span>}
+        {({ close }) => (
+          <DestinationUpdateForm
+            dataSource={updateDataSource != null ? updateDataSource : null}
+            close={close}
+            mutate={mutate}
+          />
+        )}
+      </DashboardModal>
+
+      <DashboardModal isOpen={isDeleteModalOpen} setOpen={setDeleteModalOpen}>
+        {({ close }) => (
+          <DestinationDeleteForm
+            mutate={mutate}
+            dataSource={deleteDataSource}
+            close={close}
+          />
+        )}
       </DashboardModal>
     </>
   );

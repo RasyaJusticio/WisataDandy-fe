@@ -1,5 +1,5 @@
 .form {
-  @apply flex flex-col gap-1;
+  @apply flex flex-col gap-1 min-w-96;
 }
 
 .input-group {
@@ -19,7 +19,7 @@
   @apply px-3 py-1.5 rounded-md cursor-pointer transition-colors bg-accent-600 hover:bg-accent-700 w-fit;
 }
 
-.input-group > .upload-file > input {
+.input-group .upload-file > input {
   @apply hidden;
 }
 
@@ -28,12 +28,17 @@
 }
 
 .actions .cancel,
-.actions .ok {
+.actions .ok,
+.actions .ok-danger {
   @apply px-3 py-1.5 rounded-md transition-colors;
 }
 
 .actions .cancel {
   @apply border-2 border-accent-600 hover:border-accent-700;
+}
+
+.actions .ok-danger {
+  @apply bg-red-600 hover:bg-red-700;
 }
 
 .actions .ok {
