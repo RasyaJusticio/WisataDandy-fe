@@ -4,11 +4,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import React from "react";
 import { Button, Dialog } from "react-aria-components";
 import { useForm } from "react-hook-form";
-import {
-  DestinationCreateFormData,
-  DestinationCreateSchema,
-} from "../../types/DestinationCreateFormData";
 import { KeyedMutator } from "swr";
+import {
+  destinationSchema,
+  DestinationSchema,
+} from "../../types/DestinationSchema";
 
 const URL = "http://127.0.0.1:8000/api/v1/destination";
 
@@ -22,11 +22,11 @@ const DestinationCreateForm = ({ close, mutate }: Props) => {
     handleSubmit,
     register,
     formState: { errors },
-  } = useForm<DestinationCreateFormData>({
-    resolver: zodResolver(DestinationCreateSchema),
+  } = useForm<DestinationSchema>({
+    resolver: zodResolver(destinationSchema),
   });
 
-  const onSubmit = (data: DestinationCreateFormData) => {
+  const onSubmit = (data: DestinationSchema) => {
     const formData = new FormData();
     formData.append("name", data.name);
     formData.append("slug", data.slug);

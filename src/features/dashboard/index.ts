@@ -10,9 +10,9 @@ export { default as DestinationUpdateForm } from "./components/forms/Destination
 export { default as DestinationDeleteForm } from "./components/forms/DestinationDeleteForm";
 
 export { destinationSchema } from "./types/DestinationSchema";
+export type { DestinationSchema } from "./types/DestinationSchema";
 
 export type { default as DestinationObject } from "./types/DestinationObject";
-export type { DestinationSchema } from "./types/DestinationSchema";
 
 export { default as destinationService } from "./services/destinationService";
 export { default as facilityService } from "./services/facilityService";
