@@ -8,6 +8,7 @@ import {
   DestinationCreateForm,
   DestinationReadForm,
   DestinationUpdateForm,
+  DestinationDeleteForm,
   destinationService,
   TableRow,
 } from "@/src/features/dashboard";
@@ -21,6 +22,8 @@ const DestinationPage = () => {
   const [isReadModalOpen, setReadModalOpen] = useState(false);
   const [updateDataSource, setUpdateDataSource] = useState<DestinationObject>();
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+  const [deleteDataSource, setDeleteDataSource] = useState<number>(0);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const onCreate = () => {
     setCreateModalOpen(true);
@@ -36,7 +39,10 @@ const DestinationPage = () => {
     setUpdateModalOpen(true);
   };
 
-  const onDelete = () => {};
+  const onDelete = (data: number) => {
+    setDeleteDataSource(data)
+    setDeleteModalOpen(true);
+  };
 
   return (
     <>
@@ -75,6 +81,10 @@ const DestinationPage = () => {
             mutate={mutate}
           />
         )}
+      </DashboardModal>
+
+      <DashboardModal isOpen={isDeleteModalOpen} setOpen={setDeleteModalOpen}>
+        {({ close }) => <DestinationDeleteForm mutate={mutate} dataSource={deleteDataSource} close={close} />}
       </DashboardModal>
     </>
   );

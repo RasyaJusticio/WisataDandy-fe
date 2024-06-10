@@ -31,7 +31,7 @@ type Props = Readonly<{
   onCreate?: (e: PressEvent) => void;
   onRead?: (data: Row) => void;
   onUpdate?: (data: Row) => void;
-  onDelete?: (e: PressEvent) => void;
+  onDelete?: (data: number) => void;
 }>;
 
 const MyTable = ({
@@ -101,7 +101,7 @@ const MyTable = ({
                         <PiPencil />
                       </Button>
                       <Button
-                        onPress={onDelete}
+                        onPress={() => onDelete && onDelete(row?.id || 0)}
                         className="hover:bg-accent-600 rounded-md transition-all p-2"
                       >
                         <PiTrash />
