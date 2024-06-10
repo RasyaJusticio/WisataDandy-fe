@@ -7,13 +7,16 @@ import {
   facilityService,
   TableRow,
 } from "@/src/features/dashboard";
+import FacilityDeleteForm from "@/src/features/dashboard/components/forms/FacilityDeleteForm";
 import React, { useState } from "react";
 
 const FacilityPage = () => {
-  const { data, isLoading } = facilityService.useFacility();
+  const { data, isLoading, mutate } = facilityService.useFacility();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+  const [deleteDataSource, setDeleteDataSource] = useState<number>(0);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const onCreate = () => {
     setCreateModalOpen(true);
@@ -23,7 +26,10 @@ const FacilityPage = () => {
     setUpdateModalOpen(true);
   };
 
-  const onDelete = () => {};
+  const onDelete = (data: number) => {
+    setDeleteDataSource(data);
+    setDeleteModalOpen(true);
+  };
 
   return (
     <>
@@ -46,6 +52,16 @@ const FacilityPage = () => {
 
       <DashboardModal isOpen={isUpdateModalOpen} setOpen={setUpdateModalOpen}>
         {({ close }) => <span>Update Modal</span>}
+      </DashboardModal>
+
+      <DashboardModal isOpen={isDeleteModalOpen} setOpen={setDeleteModalOpen}>
+        {({ close }) => (
+          <FacilityDeleteForm
+            dataSource={deleteDataSource}
+            close={close}
+            mutate={mutate}
+          />
+        )}
       </DashboardModal>
     </>
   );
