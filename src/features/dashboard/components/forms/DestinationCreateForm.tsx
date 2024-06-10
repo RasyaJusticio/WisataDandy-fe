@@ -42,6 +42,7 @@ const DestinationCreateForm = ({ close, mutate }: Props) => {
       },
     }).then(() => {
       mutate();
+      close();
     });
   };
 
