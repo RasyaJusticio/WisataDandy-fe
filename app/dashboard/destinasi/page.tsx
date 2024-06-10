@@ -4,8 +4,10 @@ import {
   DashboardModal,
   DashboardTable,
   destinationColumns,
+  DestinationObject,
   DestinationCreateForm,
   DestinationReadForm,
+  DestinationUpdateForm,
   DestinationObject, 
   destinationService,
   TableRow,
@@ -18,6 +20,7 @@ const DestinationPage = () => {
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
   const [readDataSource, setReadDataSource] = useState<DestinationObject>();
   const [isReadModalOpen, setReadModalOpen] = useState(false);
+  const [updateDataSource, setUpdateDataSource] = useState<DestinationObject>();
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
 
   const onCreate = () => {
@@ -29,7 +32,8 @@ const DestinationPage = () => {
     setReadModalOpen(true);
   };
 
-  const onUpdate = () => {
+  const onUpdate = (data: TableRow) => {
+    setUpdateDataSource(data as DestinationObject);
     setUpdateModalOpen(true);
   };
 
@@ -65,7 +69,13 @@ const DestinationPage = () => {
       </DashboardModal>
 
       <DashboardModal isOpen={isUpdateModalOpen} setOpen={setUpdateModalOpen}>
-        {({ close }) => <span>Update Modal</span>}
+        {({ close }) => (
+          <DestinationUpdateForm
+            dataSource={updateDataSource != null ? updateDataSource : null}
+            close={close}
+            mutate={mutate}
+          />
+        )}
       </DashboardModal>
     </>
   );
