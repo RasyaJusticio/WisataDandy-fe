@@ -4,26 +4,37 @@ import {
   DashboardModal,
   DashboardTable,
   facilityColumns,
+  FacilityObject,
   facilityService,
   TableRow,
 } from "@/src/features/dashboard";
+import FacilityCreateForm from "@/src/features/dashboard/components/forms/FacilityCreateForm";
+import FacilityUpdateForm from "@/src/features/dashboard/components/forms/FacilityUpdateForm";
+import FacilityDeleteForm from "@/src/features/dashboard/components/forms/FacilityDeleteForm";
 import React, { useState } from "react";
 
 const FacilityPage = () => {
-  const { data, isLoading } = facilityService.useFacility();
+  const { data, isLoading, mutate } = facilityService.useFacility();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+  const [updateDataSource, setUpdateDataSource] = useState<FacilityObject>();
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
+  const [deleteDataSource, setDeleteDataSource] = useState<number>(0);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const onCreate = () => {
     setCreateModalOpen(true);
   };
 
-  const onUpdate = () => {
+  const onUpdate = (data: TableRow) => {
+    setUpdateDataSource(data as FacilityObject);
     setUpdateModalOpen(true);
   };
 
-  const onDelete = () => {};
+  const onDelete = (data: number) => {
+    setDeleteDataSource(data);
+    setDeleteModalOpen(true);
+  };
 
   return (
     <>
@@ -41,11 +52,27 @@ const FacilityPage = () => {
       </div>
 
       <DashboardModal isOpen={isCreateModalOpen} setOpen={setCreateModalOpen}>
-        {({ close }) => <span>Create Modal</span>}
+        {({ close }) => <FacilityCreateForm close={close} mutate={mutate} />}
       </DashboardModal>
 
       <DashboardModal isOpen={isUpdateModalOpen} setOpen={setUpdateModalOpen}>
-        {({ close }) => <span>Update Modal</span>}
+        {({ close }) => (
+          <FacilityUpdateForm
+            dataSource={updateDataSource}
+            close={close}
+            mutate={mutate}
+          />
+        )}
+      </DashboardModal>
+
+      <DashboardModal isOpen={isDeleteModalOpen} setOpen={setDeleteModalOpen}>
+        {({ close }) => (
+          <FacilityDeleteForm
+            dataSource={deleteDataSource}
+            close={close}
+            mutate={mutate}
+          />
+        )}
       </DashboardModal>
     </>
   );
