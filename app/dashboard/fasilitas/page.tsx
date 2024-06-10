@@ -4,22 +4,26 @@ import {
   DashboardModal,
   DashboardTable,
   facilityColumns,
+  FacilityObject,
   facilityService,
   TableRow,
 } from "@/src/features/dashboard";
+import FacilityUpdateForm from "@/src/features/dashboard/components/forms/FacilityUpdateForm";
 import React, { useState } from "react";
 
 const FacilityPage = () => {
-  const { data, isLoading } = facilityService.useFacility();
+  const { data, isLoading, mutate } = facilityService.useFacility();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState(false);
+  const [updateDataSource, setUpdateDataSource] = useState<FacilityObject>();
   const [isUpdateModalOpen, setUpdateModalOpen] = useState(false);
 
   const onCreate = () => {
     setCreateModalOpen(true);
   };
 
-  const onUpdate = () => {
+  const onUpdate = (data: TableRow) => {
+    setUpdateDataSource(data as FacilityObject);
     setUpdateModalOpen(true);
   };
 
@@ -45,7 +49,13 @@ const FacilityPage = () => {
       </DashboardModal>
 
       <DashboardModal isOpen={isUpdateModalOpen} setOpen={setUpdateModalOpen}>
-        {({ close }) => <span>Update Modal</span>}
+        {({ close }) => (
+          <FacilityUpdateForm
+            dataSource={updateDataSource}
+            close={close}
+            mutate={mutate}
+          />
+        )}
       </DashboardModal>
     </>
   );
