@@ -1,13 +1,11 @@
 "use client";
 
 import React from "react";
-import {
-  Button,
-  Dialog,
-} from "react-aria-components";
+import { Button, Dialog } from "react-aria-components";
 import { DestinationObject } from "../..";
 import Link from "next/link";
 import ImageDisplay from "../ui/ImageDisplay";
+import SubmitButton from "../ui/SubmitButton";
 
 type Props = Readonly<{
   dataSource: DestinationObject | null | undefined;
@@ -74,9 +72,9 @@ const DestinationReadForm = ({ dataSource, close }: Props) => {
           >
             Lihat Halaman
           </Link>
-          <Button type="reset" className="cancel" onPress={close}>
+          <SubmitButton type="reset" variant="outlined" onPress={close}>
             Kembali
-          </Button>
+          </SubmitButton>
         </div>
       </form>
     </Dialog>

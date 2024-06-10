@@ -1,8 +1,9 @@
 "use client";
 
-import React, { FormEvent } from "react";
+import React, { FormEvent, useState } from "react";
 import { Button, Dialog } from "react-aria-components";
 import { KeyedMutator } from "swr";
+import SubmitButton from "../ui/SubmitButton";
 
 const URL = "http://127.0.0.1:8000/api/v1/destination";
 
@@ -13,18 +14,25 @@ type Props = Readonly<{
 }>;
 
 const DestinationDeleteForm = ({ dataSource, mutate, close }: Props) => {
+  const [isLoading, setLoading] = useState<boolean>(false);
+
   const onSubmit = (ev: FormEvent) => {
     ev.preventDefault();
+    setLoading(true);
 
     fetch(`${URL}/${dataSource}`, {
       method: "DELETE",
       headers: {
         accept: "application/json",
       },
-    }).then(() => {
-      mutate();
-      close();
-    });
+    })
+      .then(() => {
+        mutate();
+        close();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -35,12 +43,12 @@ const DestinationDeleteForm = ({ dataSource, mutate, close }: Props) => {
           dapat dibatalkan.
         </p>
         <div className="actions">
-          <Button className="cancel" onPress={close}>
+          <Button className="cancel" onPress={close} isDisabled={isLoading}>
             Batal
           </Button>
-          <Button type="submit" className="ok-danger">
+          <SubmitButton type="submit" color="danger" loading={isLoading}>
             Hapus
-          </Button>
+          </SubmitButton>
         </div>
       </form>
     </Dialog>

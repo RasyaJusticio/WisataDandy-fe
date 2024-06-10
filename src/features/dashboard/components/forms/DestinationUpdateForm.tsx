@@ -12,6 +12,7 @@ import {
 import DestinationObject from "../../types/DestinationObject";
 import ImageDisplay from "../ui/ImageDisplay";
 import { convertFileToSrc } from "../../utils/convertFileToSrc";
+import SubmitButton from "../ui/SubmitButton";
 
 const URL = "http://127.0.0.1:8000/api/v1/destination";
 
@@ -32,6 +33,7 @@ const DestinationUpdateForm = ({ dataSource, close, mutate }: Props) => {
     resolver: zodResolver(destinationSchema),
   });
 
+  const [isLoading, setLoading] = useState<boolean>(false);
   const [imageSrc, setImageSrc] = useState<string>(
     dataSource?.image_url
       ? `http://127.0.0.1:8000/storage/${dataSource?.image_url}`
@@ -41,6 +43,8 @@ const DestinationUpdateForm = ({ dataSource, close, mutate }: Props) => {
   const watchFile = watch("image", []);
 
   const onSubmit = (data: DestinationSchema) => {
+    setLoading(true);
+
     const formData = new FormData();
 
     if (data.name !== dataSource?.name) {
@@ -65,10 +69,14 @@ const DestinationUpdateForm = ({ dataSource, close, mutate }: Props) => {
       headers: {
         accept: "application/json",
       },
-    }).then(() => {
-      mutate();
-      close();
-    });
+    })
+      .then(() => {
+        mutate();
+        close();
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
@@ -151,12 +159,17 @@ const DestinationUpdateForm = ({ dataSource, close, mutate }: Props) => {
         </div>
 
         <div className="actions">
-          <Button type="reset" className="cancel" onPress={close}>
+          <Button
+            type="reset"
+            className="cancel"
+            onPress={close}
+            isDisabled={isLoading}
+          >
             Batal
           </Button>
-          <Button type="submit" className="ok">
+          <SubmitButton type="submit" loading={isLoading}>
             Selesai
-          </Button>
+          </SubmitButton>
         </div>
       </form>
     </Dialog>
