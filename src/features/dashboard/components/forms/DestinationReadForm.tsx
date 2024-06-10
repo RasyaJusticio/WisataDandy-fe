@@ -4,15 +4,9 @@ import React from "react";
 import {
   Button,
   Dialog,
-  DialogTrigger,
-  Heading,
-  Modal,
-  ModalOverlay,
 } from "react-aria-components";
 import { DestinationObject } from "../..";
-import Image from "next/image";
 import Link from "next/link";
-import { PiX } from "react-icons/pi";
 import ImageDisplay from "../ui/ImageDisplay";
 
 type Props = Readonly<{
@@ -63,7 +57,8 @@ const DestinationReadForm = ({ dataSource, close }: Props) => {
           ) : (
             <input
               type="text"
-              value={'Tidak ada gambar'}
+              value={"Tidak ada gambar"}
+              style={{ width: "fit-content" }}
               readOnly
             />
           )}
@@ -75,6 +70,7 @@ const DestinationReadForm = ({ dataSource, close }: Props) => {
             href={`/destinasi/${dataSource?.slug}`}
             rel="noopener noreferer"
             className="cancel"
+            style={{ marginRight: "auto" }}
           >
             Lihat Halaman
           </Link>

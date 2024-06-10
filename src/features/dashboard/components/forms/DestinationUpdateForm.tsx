@@ -1,15 +1,8 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import {
-  Button,
-  Dialog,
-  DialogTrigger,
-  Heading,
-  Modal,
-  ModalOverlay,
-} from "react-aria-components";
+import React, { useEffect, useState } from "react";
+import { Button, Dialog } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { KeyedMutator } from "swr";
 import {
@@ -17,9 +10,8 @@ import {
   destinationSchema,
 } from "../../types/DestinationSchema";
 import DestinationObject from "../../types/DestinationObject";
-import { PiX } from "react-icons/pi";
-import Image from "next/image";
 import ImageDisplay from "../ui/ImageDisplay";
+import { convertFileToSrc } from "../../utils/convertFileToSrc";
 
 const URL = "http://127.0.0.1:8000/api/v1/destination";
 
@@ -33,10 +25,20 @@ const DestinationUpdateForm = ({ dataSource, close, mutate }: Props) => {
   const {
     handleSubmit,
     register,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<DestinationSchema>({
     resolver: zodResolver(destinationSchema),
   });
+
+  const [imageSrc, setImageSrc] = useState<string>(
+    dataSource?.image_url
+      ? `http://127.0.0.1:8000/storage/${dataSource?.image_url}`
+      : ""
+  );
+
+  const watchFile = watch("image", []);
 
   const onSubmit = (data: DestinationSchema) => {
     const formData = new FormData();
@@ -53,7 +55,7 @@ const DestinationUpdateForm = ({ dataSource, close, mutate }: Props) => {
     if (data.description !== dataSource?.description) {
       formData.append("description", data.description);
     }
-    if (data.image.length > 0) {
+    if (data?.image?.length > 0) {
       formData.append("image", data.image[0]);
     }
 
@@ -68,6 +70,20 @@ const DestinationUpdateForm = ({ dataSource, close, mutate }: Props) => {
       close();
     });
   };
+
+  useEffect(() => {
+    if (watchFile && watchFile[0]) {
+      const file: File = watchFile[0];
+
+      convertFileToSrc(file)
+        .then((result) => setImageSrc(result))
+        .catch((error) => {
+          console.warn(error);
+          setValue("image", null);
+          setImageSrc("");
+        });
+    }
+  }, [watchFile]);
 
   return (
     <Dialog className="outline-none">
@@ -127,14 +143,10 @@ const DestinationUpdateForm = ({ dataSource, close, mutate }: Props) => {
                 {...register("image")}
               />
             </label>
-            {dataSource?.image_url && (
-              <ImageDisplay
-                src={`http://127.0.0.1:8000/storage/${dataSource?.image_url}`}
-                alt=""
-              />
+            {imageSrc.trim() !== "" && (
+              <ImageDisplay src={`${imageSrc}`} alt="" />
             )}
           </div>
-
           <p>{errors.image?.message as string}</p>
         </div>
 

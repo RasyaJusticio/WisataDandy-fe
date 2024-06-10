@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Dialog } from "react-aria-components";
 import { useForm } from "react-hook-form";
 import { KeyedMutator } from "swr";
@@ -9,6 +9,8 @@ import {
   destinationSchema,
   DestinationSchema,
 } from "../../types/DestinationSchema";
+import ImageDisplay from "../ui/ImageDisplay";
+import { convertFileToSrc } from "../../utils/convertFileToSrc";
 
 const URL = "http://127.0.0.1:8000/api/v1/destination";
 
@@ -21,10 +23,15 @@ const DestinationCreateForm = ({ close, mutate }: Props) => {
   const {
     handleSubmit,
     register,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<DestinationSchema>({
     resolver: zodResolver(destinationSchema),
   });
+
+  const watchFile = watch("image", []);
+  const [imageSrc, setImageSrc] = useState<string>("");
 
   const onSubmit = (data: DestinationSchema) => {
     const formData = new FormData();
@@ -45,6 +52,20 @@ const DestinationCreateForm = ({ close, mutate }: Props) => {
       close();
     });
   };
+
+  useEffect(() => {
+    if (watchFile && watchFile[0]) {
+      const file: File = watchFile[0];
+
+      convertFileToSrc(file)
+        .then((result) => setImageSrc(result))
+        .catch((error) => {
+          console.warn(error);
+          setValue("image", null);
+          setImageSrc("");
+        });
+    }
+  }, [watchFile]);
 
   return (
     <Dialog className="outline-none">
@@ -78,15 +99,20 @@ const DestinationCreateForm = ({ close, mutate }: Props) => {
 
         <div className="input-group">
           <label htmlFor="imageInput">Gambar</label>
-          <label className="upload-file">
-            Upload Gambar
-            <input
-              type="file"
-              accept=".jpg,.jpeg,.png,.webp,.jfif"
-              id="imageInput"
-              {...register("image")}
-            />
-          </label>
+          <div className="flex gap-2">
+            <label className="upload-file">
+              Upload Gambar
+              <input
+                type="file"
+                accept=".jpg,.jpeg,.png,.webp,.jfif"
+                id="imageInput"
+                {...register("image")}
+              />
+            </label>
+            {imageSrc.trim() !== "" && (
+              <ImageDisplay src={`${imageSrc}`} alt="" />
+            )}
+          </div>
           <p>{errors.image?.message as string}</p>
         </div>
 
