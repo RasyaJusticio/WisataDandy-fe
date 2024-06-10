@@ -19,6 +19,7 @@ import {
 import DestinationObject from "../../types/DestinationObject";
 import { PiX } from "react-icons/pi";
 import Image from "next/image";
+import ImageDisplay from "../ui/ImageDisplay";
 
 const URL = "http://127.0.0.1:8000/api/v1/destination";
 
@@ -116,46 +117,24 @@ const DestinationUpdateForm = ({ dataSource, close, mutate }: Props) => {
 
         <div className="input-group">
           <label htmlFor="imageInput">Gambar</label>
-          <label className="upload-file">
-            Upload File
-            <input
-              type="file"
-              accept=".jpg,.jpeg,.png,.webp,.jfif"
-              id="imageInput"
-              {...register("image")}
-            />
-          </label>
-          <DialogTrigger>
-            <Button className="w-fit px-3 py-1.5 rounded-md transition-colors bg-accent-600 hover:bg-accent-700">
-              Lihat Gambar
-            </Button>
-            <ModalOverlay>
-              <Modal isDismissable>
-                <Dialog className="w-full md:w-fit m-auto p-3 bg-tertiary border-2 rounded-md border-border outline-none shadow-md pointer-events-auto">
-                  {({ close }) => (
-                    <div className="flex flex-col gap-2 items-center">
-                      <div className="flex w-full items-center">
-                        <Heading slot="title">Lihat Gambar</Heading>
-                        <Button className="ml-auto" onPress={close}>
-                          <PiX />
-                        </Button>
-                      </div>
-                      <div className="flex w-full md:w-96">
-                        <Image
-                          className="!relative !h-fit"
-                          src={`http://127.0.0.1:8000/storage/${
-                            dataSource?.image_url || ""
-                          }`}
-                          alt=""
-                          fill
-                        />
-                      </div>
-                    </div>
-                  )}
-                </Dialog>
-              </Modal>
-            </ModalOverlay>
-          </DialogTrigger>
+          <div className="flex gap-2">
+            <label className="upload-file">
+              Upload Gambar
+              <input
+                type="file"
+                accept=".jpg,.jpeg,.png,.webp,.jfif"
+                id="imageInput"
+                {...register("image")}
+              />
+            </label>
+            {dataSource?.image_url && (
+              <ImageDisplay
+                src={`http://127.0.0.1:8000/storage/${dataSource?.image_url}`}
+                alt=""
+              />
+            )}
+          </div>
+
           <p>{errors.image?.message as string}</p>
         </div>
 

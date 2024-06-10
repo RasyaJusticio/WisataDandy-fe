@@ -79,7 +79,7 @@ const DestinationCreateForm = ({ close, mutate }: Props) => {
         <div className="input-group">
           <label htmlFor="imageInput">Gambar</label>
           <label className="upload-file">
-            Upload File
+            Upload Gambar
             <input
               type="file"
               accept=".jpg,.jpeg,.png,.webp,.jfif"
